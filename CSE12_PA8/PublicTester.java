@@ -102,6 +102,7 @@ public class PublicTester {
         expectedRes.add(root.getRight());
         ArrayList<MyBST.MyBSTNode<Integer, Integer>> actualRes 
             = completeTree.inorder();
+        assertEquals(6, actualRes.size());
         for (int i=0; i<expectedRes.size(); i++){
             assertSame(expectedRes.get(i), actualRes.get(i));
         }
@@ -132,6 +133,7 @@ public class PublicTester {
         assertSame(completeTree.root.successor(), vi.next);
         // root become the last visited node
         assertSame(completeTree.root, vi.lastVisited);
+
     }
 
     // ====== Calender class ======
@@ -151,4 +153,6 @@ public class PublicTester {
         assertTrue(cal.book(0, 10));
         assertTrue(cal.book(20, 30));
     }
+
+
 }

@@ -1,5 +1,18 @@
+/**
+ * Name: Kun Wang
+ * Email: kuw010@ucsd.edu
+ * Sources used: none
+ * 
+ * This is the BST iterator file that contains the BST iterator class
+ */
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+
+/**
+ * This is the class of my implementatio of BST iterator. It contains
+ * all methods and variables of a BST iterator
+ */
 
 public class MyBSTIterator<K extends Comparable<K>, V> extends MyBST<K, V> {
     abstract class MyBSTNodeIterator<T> implements Iterator<T> {
@@ -26,26 +39,38 @@ public class MyBSTIterator<K extends Comparable<K>, V> extends MyBST<K, V> {
             return next != null;
         }
 
+        /**
+         * This method advance to the next node
+         * @return the node we visited
+         */
         MyBSTNode<K, V> nextNode() {
-            // TODO
-            return null;
+            //check if there is next node
+            if(next.successor() == null){
+                throw new NoSuchElementException();
+            }
+            //set last visited
+            this.lastVisited = next;
+            //get to the next node
+            next = next.successor();
+            return lastVisited;
         }
 
         /**
-         * TODO: add inline comments for this method to demonstrate your
-         *   understanding of this method.
-         *
          * This method removes the last visited node from the tree.
          */
         public void remove() {
+            //check if any node has been visited
             if (lastVisited == null) {
                 throw new IllegalStateException();
             }
+            //check if visited node is a leaf
             if (lastVisited.getRight() != null &&
                     lastVisited.getLeft() != null) {
                 next = lastVisited;
             }
+            //use remove method
             MyBSTIterator.this.remove(lastVisited.getKey());
+            //set last visited to null
             lastVisited = null;
         }
     }
