@@ -109,16 +109,26 @@ public class CustomTester {
     //Test nodeIterator remove on incomplete tree
     @Test
     public void noteIteratorTest1(){
+
         MyBSTIterator<Integer, Integer> BSTIter = new MyBSTIterator<>();
         BSTIter.root = incompleteTree.root;
         MyBSTIterator<Integer, Integer>.MyBSTValueIterator ValueIter = 
             BSTIter.new MyBSTValueIterator(BSTIter.root);
 
+        ArrayList<MyBST.MyBSTNode<Integer, Integer>> expectedRes 
+        = new ArrayList<>();
+        expectedRes.add(incompleteTree.root.getLeft());
+        expectedRes.add(incompleteTree.root.getLeft().getRight());
+        expectedRes.add(incompleteTree.root.getRight());
+
         ValueIter.nextNode();
         assertEquals(incompleteTree.root, ValueIter.lastVisited);
         ValueIter.remove();
-        assertEquals(6, incompleteTree.root.getKey());
-        //assertEquals(3, incompleteTree.size());
+        assertEquals(6, incompleteTree.root.getKey());                
+        assertEquals(expectedRes, incompleteTree.inorder());
+
+
+
     }
 
     //Test calendar stressed

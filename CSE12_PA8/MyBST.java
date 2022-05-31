@@ -147,6 +147,7 @@ public class MyBST<K extends Comparable<K>,V>{
             else{
                 parent.setRight(null);
             }
+            //change size
             this.size--;
         }
         //check if curr has one left child
@@ -161,6 +162,7 @@ public class MyBST<K extends Comparable<K>,V>{
             else{
                 parent.setRight(curr.getLeft());
             }
+            //change size
             this.size--;
         }
         //check if curr has one right child
@@ -175,6 +177,7 @@ public class MyBST<K extends Comparable<K>,V>{
             else{
                 parent.setRight(curr.getRight());
             }
+            //change size
             this.size--;
         }
         //if curr has two child
