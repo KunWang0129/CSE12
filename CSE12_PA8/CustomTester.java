@@ -106,6 +106,18 @@ public class CustomTester {
         assertEquals(expected, emptyTree.inorder());
     }
 
+    //Test inorder on incomplete tree
+    @Test
+    public void inorderTest2(){
+        ArrayList<MyBST.MyBSTNode<Integer, Integer>> expectedRes 
+        = new ArrayList<>();
+        expectedRes.add(incompleteTree.root.getLeft());
+        expectedRes.add(incompleteTree.root.getLeft().getRight());
+        expectedRes.add(incompleteTree.root);
+        expectedRes.add(incompleteTree.root.getRight());
+        assertEquals(expectedRes, incompleteTree.inorder());
+    }
+
     //Test nodeIterator remove on incomplete tree
     @Test
     public void noteIteratorTest1(){
@@ -126,9 +138,7 @@ public class CustomTester {
         ValueIter.remove();
         assertEquals(6, incompleteTree.root.getKey());                
         assertEquals(expectedRes, incompleteTree.inorder());
-
-
-
+        //assertEquals(3, incompleteTree.size());
     }
 
     //Test calendar stressed
@@ -138,7 +148,6 @@ public class CustomTester {
         for(int i = 0;  i<100; i++){
             assertTrue(cal.book(i, i+1));
         }
-
         assertFalse(cal.book(10, 30));
 
     }

@@ -45,7 +45,7 @@ public class MyBSTIterator<K extends Comparable<K>, V> extends MyBST<K, V> {
          */
         MyBSTNode<K, V> nextNode() {
             //check if there is next node
-            if(next.successor() == null){
+            if(hasNext() == false){
                 throw new NoSuchElementException();
             }
             //set last visited
