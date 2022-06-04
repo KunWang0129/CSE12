@@ -35,18 +35,15 @@ public class MyCalendar {
         if(start < 0 || start >= end){
             throw new IllegalArgumentException();
         }
-        //check if there is no bookings
-        if(calendar.ceilingKey(start) == null || 
-        calendar.floorKey(end) == null){
-        }
         //check if there is node between start and end
-        else if(calendar.ceilingKey(start) < end && 
-            calendar.floorKey(end) > start){
-            return false;
+        else if((calendar.ceilingKey(start) == null || 
+            calendar.ceilingKey(start) >= end )&& 
+            (calendar.floorKey(start) == null ||
+            calendar.get(calendar.floorKey(start)) <= start)){
+            calendar.put(start, end);
+            return true;
         }
-        calendar.put(start, one);
-        calendar.put(end,one);
-        return true;
+        return false;
     }
 
     /**

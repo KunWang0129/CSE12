@@ -31,49 +31,66 @@ public class MyBST<K extends Comparable<K>,V>{
      * @return the preexisting node that is replaced
      */
     public V insert(K key, V value){
-        //update size
-        this.size++;
-        //if there is not element in tree
-        if(root == null){
-            root = new MyBSTNode<K,V>(key, value, null);
-            return null;
+        //Null Pointer excpetion
+        if(key == null){
+            throw new NullPointerException();
         }
-        else{
-            MyBSTNode node = new MyBSTNode<K,V>(key, value, root);
-            MyBSTNode curr = root;
-            while(curr != null){
-                //if two node have same value
-                if(curr.getKey().equals(key)){
-                    Object replaced = curr.getValue();
-                    curr.setValue(value);
-                    return (V) replaced;
+        MyBSTNode<K,V> curr = root;
+        //Same keys
+        if (searchHelper(key) != null){
+            while(curr.predecessor() != null){
+                curr = curr.predecessor();
+            }
+            if(root.getKey() == key){
+                V replaced = root.getValue();
+                root.setValue(value);
+                return replaced;
+            }
+            else{
+                while(curr.getKey() != key){
+                    curr=curr.successor();
                 }
-                //if key is less than curr.key
-                else if(((Integer)node.getKey())
-                .compareTo((Integer)curr.getKey()) < 0){
-                    //if there is no left child, stop
-                    if(curr.getLeft() == null){
-                        node.setParent(curr);
-                        curr.setLeft(node);
+                V replaced = curr.getValue();
+                curr.setValue(value);
+                return replaced;
+            }
+        }
+        else {
+            //No element in tree
+            if(root == null){
+                root = new MyBSTNode<K,V>(key, value, null);
+                size++;
+                return null;
+            }
+            else {
+                while(curr!=null){
+                    //Less than curr
+                    if(key.compareTo(curr.getKey())<0){
+                        if(curr.getLeft() == null){
+                            curr.setLeft(new MyBSTNode<K,V>(key, value, curr));
+                            curr = null;
+                            size++;
+                        }
+                        else{
+                            curr = curr.left;
+                        }
                     }
+                    //Greater than curr
                     else{
-                        curr = curr.getLeft();
-                    }
-                }
-                //if key is greater than or equal to curr.key
-                else {
-                    //if there is no right child, stop
-                    if(curr.getRight() == null){
-                        node.setParent(curr);
-                        curr.setRight(node);
-                    }
-                    else{
-                        curr = curr.getRight();
+                        if(curr.getRight() == null){
+                            curr.setRight(new MyBSTNode<K,V>(key, value, curr));
+                            curr = null;
+                            size++;
+                        }
+                        else{
+                            curr = curr.right;
+                        }
+
                     }
                 }
             }
-        }   
-        return null;
+            return null;
+        }
     }
 
     /**
@@ -81,7 +98,7 @@ public class MyBST<K extends Comparable<K>,V>{
      * @param key key to be searched
      * @return node with same key
      */
-    private MyBSTNode searchHelper(K key){
+    private MyBSTNode<K,V> searchHelper(K key){
         MyBSTNode<K,V> curr = root;
         //if key is null
         if(key == null){
@@ -134,7 +151,7 @@ public class MyBST<K extends Comparable<K>,V>{
         }
         MyBSTNode<K,V> curr = this.searchHelper(key);
         MyBSTNode<K,V> parent = curr.getParent();
-        Object value = curr.getValue();
+        V value = curr.getValue();
         //check if node is leaf
         if(curr.getLeft() == null && curr.getRight() == null){
             //check relation between curr and parent
@@ -188,7 +205,7 @@ public class MyBST<K extends Comparable<K>,V>{
             curr.setKey(successor.getKey());
             curr.setValue(successor.getValue());
         }
-        return (V)value;
+        return value;
     }
     
     
